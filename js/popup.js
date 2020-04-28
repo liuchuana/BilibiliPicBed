@@ -26,7 +26,7 @@ $(function () {
   });
   //   上传图片ajax
   function uploadFilePost(base64) {
-    base64 = encodeURIComponent(base64)
+    base64 = encodeURIComponent(base64);
     fetch("https://api.bilibili.com/x/article/creative/article/upcover", {
       method: "POST",
       mode: "cors",
@@ -64,4 +64,7 @@ $(function () {
       }
     );
   }
+  $("#pic_url").click(function () {
+    $(this).select();
+  });
 });
