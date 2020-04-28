@@ -1,0 +1,17 @@
+{
+  "name": "bilibili图床",
+  "description": "简单好用的bilibili图床。",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": "images/calculator-128.png"
+  },
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": true
+  },
+  "permissions": [
+    "cookies",
+    "*://*.bilibili.com/*"
+  ]
+}
