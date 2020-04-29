@@ -26,45 +26,51 @@
   </head>
   <body>
     <div class="main">
-      <div class="tools">
-        <span id="clearHistory">清空上传记录</span>
-        <span id="copyAllUrl">复制所有链接</span>
+      <div class="logged">
+        <div class="tools">
+          <span id="clearHistory">清空上传记录</span>
+          <span id="copyAllUrl">复制所有链接</span>
+        </div>
+        <div class="upload_box">
+          <img src="/images/upload.png" alt="" />
+            <input
+              id="uploadFile"
+              multiple="multiple"
+              type="file"
+              accept="image/gif, image/jpeg, image/jpg, image/png, image/bmp"
+            />
+        </div>
+        <ul class="clearfix pic_list">
+          <!-- <li>
+            <img
+              id="img"
+              data-clipboard-text="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
+              src="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
+              alt=""
+            />
+            <div class="progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                aria-valuenow="25"
+                style="width: 40%;"
+                aria-valuemin="20"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <input
+              type="text"
+              class="pic_url hide"
+              data-clipboard-text="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
+              value="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
+            />
+          </li> -->
+        </ul>
       </div>
-      <div class="upload_box">
-        <img src="/images/upload.png" alt="" />
-          <input
-            id="uploadFile"
-            multiple="multiple"
-            type="file"
-            accept="image/gif, image/jpeg, image/jpg, image/png, image/bmp"
-          />
+      <div class="not_logged" style="display: none;">
+        <p>与2233娘断开连接</p>
+        <a href="https://passport.bilibili.com/login" target="_blank">前往登录</a>
       </div>
-      <ul class="clearfix pic_list">
-        <!-- <li>
-          <img
-            id="img"
-            data-clipboard-text="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
-            src="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
-            alt=""
-          />
-          <div class="progress">
-            <div
-              class="progress-bar"
-              role="progressbar"
-              aria-valuenow="25"
-              style="width: 40%;"
-              aria-valuemin="20"
-              aria-valuemax="100"
-            ></div>
-          </div>
-          <input
-            type="text"
-            class="pic_url hide"
-            data-clipboard-text="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
-            value="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
-          />
-        </li> -->
-      </ul>
     </div>
   </body>
 </html>

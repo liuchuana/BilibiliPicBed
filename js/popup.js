@@ -147,6 +147,13 @@ $(function () {
       progressTip.html("上传完成");
       if (this.status === 200) {
         let res = JSON.parse(this.response);
+        console.log(res)
+        if(res.code === -101){
+          // 未登录
+          $(".not_logged").show()
+          $(".logged").hide()
+          return false;
+        }
         li.find("img").attr("data-clipboard-text", res.data.url);
         li.find("img").attr("src", res.data.url);
         li.find("input").attr("data-clipboard-text", res.data.url);
@@ -155,6 +162,7 @@ $(function () {
         li.find("input").removeClass("hide");
         historyImages.unshift(res.data.url);
         window.localStorage.setItem("history", JSON.stringify(historyImages));
+       
       } else {
         progressTip.html(
           "error:状态码：" + this.status + " 错误消息：" + this.statusText
@@ -164,7 +172,6 @@ $(function () {
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
         var pro = ((event.loaded / event.total).toFixed(4) * 100).toFixed(0);
-        console.log(pro);
         progressTip.css("width", pro + "%");
         progressTip.html("上传进度:" + pro + "%<br/>");
       }
@@ -190,7 +197,14 @@ $(function () {
         name: "bili_jct",
       },
       function (res) {
-        csrf = res.value;
+        if(res){
+          csrf = res.value;
+          $(".not_logged").hide()
+          $(".logged").show()
+        }else {
+          // $(".not_logged").show()
+          // $(".logged").hide()
+        }
       }
     );
   }
