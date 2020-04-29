@@ -10,8 +10,7 @@ function initPopupPage(callback) {
       height: h,
       focused: true,
       left: left,
-      top: top,
-      type: "popup",
+      top: top
     },
     callback && callback()
   );
