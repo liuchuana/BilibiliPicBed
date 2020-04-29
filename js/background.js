@@ -1,23 +1,3 @@
-// chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-//   switch (message.method) {
-//     case "showPopup":
-//     //   chrome.cookies.get(
-//     //     {
-//     //       url: "https://www.bilibili.com",
-//     //       name: "bili_jct",
-//     //     },
-//     //     function (cookie) {
-//     //       console.log(cookie);
-//     //     }
-//     //   );
-//         alert(1)
-//       break;
-//     default:
-//       alert("未知动作");
-//       break;
-//   }
-// });
-
 function initPopupPage(callback) {
   var w = 800;
   var h = 550;
@@ -37,6 +17,6 @@ function initPopupPage(callback) {
   );
 }
 
-chrome.browserAction.onClicked.addListener(function (tab) {
+chrome.browserAction.onClicked.addListener(function () {
   this.initPopupPage()
 });

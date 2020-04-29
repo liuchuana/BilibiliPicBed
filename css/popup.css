@@ -1,7 +1,7 @@
 html,
 body {
   background: #fff;
-  padding-top: 10px;
+  padding: 0;
 }
 .clearfix:after {
   content: ".";
@@ -12,6 +12,9 @@ body {
 }
 .hide {
   display: none !important;
+}
+.main {
+  padding-top: 10px;
 }
 .upload_box {
   width: 200px;
@@ -46,12 +49,11 @@ ul {
   display: flex;
   flex-wrap:wrap;
   margin: 0;
-  padding: 0 20px;
 }
 li {
   width: 200px;
-  margin-bottom: 6px;
-  flex: 0 0 33.333333%;
+  margin: 0 33px;
+  margin-bottom: 20px;
 }
 li img {
   display: block;
@@ -62,7 +64,7 @@ li img {
   opacity: 1;
   object-fit: cover;
   border-radius: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 li img:hover {
   opacity: 0.95;
@@ -94,6 +96,26 @@ li .pic_url:focus {
 li .progress {
   width: 200px;
   height: 30px;
+}
+.tools {
+  padding: 5px 0;
+  background: #73c9e5;
+  margin-bottom: 10px;
+}
+.tools span{
+  cursor: pointer;
+  position: relative;
+  color: #fff;
+  font-size: 12px;
+  display: block;
+  width: 70px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  background: #fb7299;
+  border-radius: 2px;
+  margin-left: 14px;
+  user-select: none;
 }
 /* li a {
   transition: border 0.3s ease 0s;

@@ -1,12 +1,8 @@
-// chrome.runtime.sendMessage({
-//   method: "showPopup",
-// });
-//
-//此处是手动选择文件
 $(function () {
   let csrf = "";
-  //   判断是否登录 登录后赋值csrf
+  let historyImages = JSON.parse(window.localStorage.getItem("history")) || [];
   checkBiliLogin();
+  drawHistoryImages();
   // 上传图片
   $("#uploadFile").change(async function () {
     event.preventDefault();
@@ -24,31 +20,57 @@ $(function () {
       uploadFile(item);
     }
   });
+  // 删除图片
+  $(".pic_list").bind("contextmenu", function (e) {
+    if (e.target.tagName !== "IMG") return false;
+    Swal.fire({
+      title: "是否删除这张图片",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+    }).then(({ value }) => {
+      if (value) {
+        historyImages =
+          JSON.parse(window.localStorage.getItem("history")) || [];
+        let target = $(e.target);
+        let url = target.attr("src");
+        let index = historyImages.indexOf(url);
+        historyImages.splice(index, 1);
+        target.parent().remove();
+        window.localStorage.setItem("history", JSON.stringify(historyImages));
+      }
+    });
+    return false;
+  });
+  // 绑定事件委托
+  $(".pic_list").on("click", ".pic_url", function () {
+    $(this).select();
+  });
   //   上传图片ajax
   function uploadFile(cover) {
     let formData = new FormData();
     formData.append("csrf", csrf);
     formData.append("cover", cover);
-    let len = $(".pic_list li").length;
-    let i = len ? len : 0;
     let str = `<li>
-      <img
-        src="${cover}"
-      />
-      <div class="progress">
-        <div
-          class="progress-bar"
-          role="progressbar"
-          aria-valuemax="100"
-        ></div>
-      </div>
-      <input
-        type="text"
-        class="pic_url hide"
-      />
-    </li>`;
-    $(".pic_list").append(str);
-    let progressTip = $(".progress .progress-bar").eq(i);
+    <img
+      src="${cover}"
+    />
+    <div class="progress">
+      <div
+        class="progress-bar"
+        role="progressbar"
+        aria-valuemax="100"
+      ></div>
+    </div>
+    <input
+      type="text"
+      class="pic_url hide"
+    />
+  </li>`;
+    $(".pic_list").prepend(str);
+    let progressTip = $(".progress .progress-bar").eq(0);
+    let li = $(".pic_list li").eq(0);
     var xhr = new XMLHttpRequest();
     xhr.open(
       "post",
@@ -59,25 +81,24 @@ $(function () {
     xhr.ontimeout = function (event) {
       progressTip.html("上传超时(60s)");
     };
-
     xhr.onload = function (event) {
       progressTip.html("上传完成");
       if (this.status === 200) {
         let res = JSON.parse(this.response);
-        let li = $(".pic_list li").eq(i);
         li.find("img").attr("data-clipboard-text", res.data.url);
         li.find("img").attr("src", res.data.url);
         li.find("input").attr("data-clipboard-text", res.data.url);
         li.find("input").attr("value", res.data.url);
         li.find(".progress").hide();
         li.find("input").removeClass("hide");
+        historyImages.unshift(res.data.url);
+        window.localStorage.setItem("history", JSON.stringify(historyImages));
       } else {
         progressTip.html(
           "error:状态码：" + this.status + " 错误消息：" + this.statusText
         );
       }
     };
-
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
         var pro = ((event.loaded / event.total).toFixed(4) * 100).toFixed(2);
@@ -85,9 +106,9 @@ $(function () {
         progressTip.html("上传进度:" + pro + "%<br/>");
       }
     };
-
     xhr.send(formData);
   }
+  // 获取图片的base64格式
   function getImageBase64(file) {
     return new Promise((resolve) => {
       let reader = new FileReader();
@@ -98,6 +119,7 @@ $(function () {
       };
     });
   }
+  // 判断是否登录 登录后赋值csrf
   function checkBiliLogin() {
     chrome.cookies.get(
       {
@@ -109,7 +131,23 @@ $(function () {
       }
     );
   }
-  $(".pic_url").click(function () {
-    $(this).select();
-  });
+  //  渲染历史数据
+  function drawHistoryImages() {
+    for (let i = 0; i < historyImages.length; i++) {
+      const url = historyImages[i];
+      let str = `<li>
+        <img
+          data-clipboard-text="${url}"
+          src="${url}"
+        />
+        <input
+          data-clipboard-text="${url}"
+          type="text"
+          value="${url}"
+          class="pic_url"
+        />
+      </li>`;
+      $(".pic_list").append(str);
+    }
+  }
 });
