@@ -1,4 +1,14 @@
 $(function () {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 800,
+    onOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
   let csrf = "";
   let historyImages = JSON.parse(window.localStorage.getItem("history")) || [];
   checkBiliLogin();
@@ -43,9 +53,61 @@ $(function () {
     });
     return false;
   });
-  // 绑定事件委托
+  // 绑定事件委托 复制链接
   $(".pic_list").on("click", ".pic_url", function () {
     $(this).select();
+    Toast.fire({
+      icon: "success",
+      title: "复制成功",
+    });
+  });
+  // 绑定事件委托 复制链接
+  $(".pic_list").on("click", "img", function () {
+    $(this).parent().find(".pic_url").select();
+    Toast.fire({
+      icon: "success",
+      title: "复制成功",
+    });
+  });
+  // 清除历史记录
+  $("#clearHistory").click(function () {
+    Swal.fire({
+      title: "是否清空所有上传记录",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+    }).then(({ value }) => {
+      if (value) {
+        window.localStorage.clear();
+        $(".pic_list li").remove();
+        Toast.fire({
+          icon: "success",
+          title: "已经清空所有上传记录",
+        });
+      }
+    });
+  });
+  $("#copyAllUrl").click(function () {
+    historyImages = JSON.parse(window.localStorage.getItem("history")) || [];
+    let copy = new ClipboardJS("#copyAllUrl", {
+      text: function () {
+        let str = historyImages.join("\n");
+        return str;
+      },
+    });
+    copy.on("success", function (e) {
+      Toast.fire({
+        icon: "success",
+        title: "复制成功",
+      });
+    });
+    copy.on("error", function (e) {
+      Toast.fire({
+        icon: "success",
+        title: "复制失败",
+      });
+    });
   });
   //   上传图片ajax
   function uploadFile(cover) {
@@ -101,7 +163,8 @@ $(function () {
     };
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
-        var pro = ((event.loaded / event.total).toFixed(4) * 100).toFixed(2);
+        var pro = ((event.loaded / event.total).toFixed(4) * 100).toFixed(0);
+        console.log(pro);
         progressTip.css("width", pro + "%");
         progressTip.html("上传进度:" + pro + "%<br/>");
       }

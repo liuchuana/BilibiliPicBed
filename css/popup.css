@@ -13,9 +13,6 @@ body {
 .hide {
   display: none !important;
 }
-.main {
-  padding-top: 10px;
-}
 .upload_box {
   width: 200px;
   height: 150px;
@@ -100,21 +97,21 @@ li .progress {
 .tools {
   padding: 5px 0;
   background: #73c9e5;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .tools span{
   cursor: pointer;
   position: relative;
   color: #fff;
   font-size: 12px;
-  display: block;
-  width: 70px;
+  display: inline-block;
+  padding: 0 10px;
   height: 24px;
   line-height: 24px;
   text-align: center;
   background: #fb7299;
   border-radius: 2px;
-  margin-left: 14px;
+  margin-left: 10px;
   user-select: none;
 }
 /* li a {
