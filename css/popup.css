@@ -10,6 +10,9 @@ body {
   visibility: hidden;
   font-size: 0;
 }
+.hide {
+  display: none !important;
+}
 .upload_box {
   width: 200px;
   height: 150px;
@@ -41,15 +44,14 @@ ul {
   list-style: none;
   padding: 0;
   display: flex;
-  justify-content: space-between;
   flex-wrap:wrap;
   margin: 0;
   padding: 0 20px;
 }
 li {
   width: 200px;
-  height: 260px;
   margin-bottom: 6px;
+  flex: 0 0 33.333333%;
 }
 li img {
   display: block;
@@ -67,10 +69,10 @@ li img:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
-li #pic_url {
+li .pic_url {
   display: block;
   height: 30px;
-  width: 100%;
+  width: 200px;
   background-color: #fff;
   cursor: default;
   position: relative;
@@ -86,8 +88,12 @@ li #pic_url {
   cursor: pointer;
   border-radius: 5px;
 }
-li #pic_url:focus {
+li .pic_url:focus {
   outline: 0;
+}
+li .progress {
+  width: 200px;
+  height: 30px;
 }
 /* li a {
   transition: border 0.3s ease 0s;

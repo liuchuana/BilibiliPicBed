@@ -4,39 +4,61 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>bilibili图床</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/popup.css" />
-    <script type="text/javascript" charset="utf-8" src="/js/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      charset="utf-8"
+      src="/js/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      charset="utf-8"
+      src="/js/bootstrap.min.js"
+    ></script>
     <script type="text/javascript" charset="utf-8" src="/js/popup.js"></script>
+    <script
+      type="text/javascript"
+      charset="utf-8"
+      src="/js/clipboard.min.js"
+    ></script>
   </head>
   <body>
     <div class="main">
       <div class="upload_box">
-        <img src="/images/upload.png" alt="">
-        <input id="uploadFile" multiple="multiple" type="file" accept="image/gif, image/jpeg, image/jpg, image/png, image/bmp">
+        <img src="/images/upload.png" alt="" />
+          <input
+            id="uploadFile"
+            multiple="multiple"
+            type="file"
+            accept="image/gif, image/jpeg, image/jpg, image/png, image/bmp"
+          />
       </div>
-      <ul class="clearfix">
-        <li>
-          <img id="img" src="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg" alt="">
-          <input type="text"  id="pic_url" value="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg">
-        </li>
-        <li>
-          <img id="img" src="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg" alt="">
-          <input type="text"  id="pic_url" value="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg">
-        </li>
-        <li>
-          <img id="img" src="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg" alt="">
-          <input type="text"  id="pic_url" value="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg">
-        </li>
-        <li>
-          <img id="img" src="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg" alt="">
-          <input type="text"  id="pic_url" value="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg">
-        </li>
-        <li>
-          <img id="img" src="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg" alt="">
-          <input type="text"  id="pic_url" value="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg">
-        </li>
+      <ul class="clearfix pic_list">
+        <!-- <li>
+          <img
+            id="img"
+            data-clipboard-text="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
+            src="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
+            alt=""
+          />
+          <div class="progress">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              aria-valuenow="25"
+              style="width: 40%;"
+              aria-valuemin="20"
+              aria-valuemax="100"
+            ></div>
+          </div>
+          <input
+            type="text"
+            class="pic_url hide"
+            data-clipboard-text="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
+            value="http://ww1.sinaimg.cn/large/005M2kKhly1ge9m3dy681j30j60paafo.jpg"
+          />
+        </li> -->
       </ul>
     </div>
   </body>
