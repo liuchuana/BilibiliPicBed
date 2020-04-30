@@ -53,22 +53,6 @@ $(function () {
     });
     return false;
   });
-  // 绑定事件委托 复制链接
-  $(".pic_list").on("click", ".pic_url", function () {
-    $(this).select();
-    Toast.fire({
-      icon: "success",
-      title: "复制成功",
-    });
-  });
-  // 绑定事件委托 复制链接
-  $(".pic_list").on("click", "img", function () {
-    $(this).parent().find(".pic_url").select();
-    Toast.fire({
-      icon: "success",
-      title: "复制成功",
-    });
-  });
   // 清除历史记录
   $("#clearHistory").click(function () {
     Swal.fire({
@@ -116,6 +100,7 @@ $(function () {
     formData.append("cover", cover);
     let str = `<li>
     <img
+      class="pic_img"
       src="${cover}"
     />
     <div class="progress">
@@ -139,7 +124,7 @@ $(function () {
       "https://api.bilibili.com/x/article/creative/article/upcover",
       true
     );
-    xhr.timeout = 60 * 1000;
+    xhr.timeout = 120 * 1000;
     xhr.ontimeout = function (event) {
       progressTip.html("上传超时(60s)");
     };
@@ -147,22 +132,25 @@ $(function () {
       progressTip.html("上传完成");
       if (this.status === 200) {
         let res = JSON.parse(this.response);
-        console.log(res)
-        if(res.code === -101){
+        console.log(res);
+        if (res.code === 0) {
+          li.find("img").attr("data-clipboard-text", res.data.url);
+          li.find("img").attr("src", res.data.url);
+          li.find("input").attr("data-clipboard-text", res.data.url);
+          li.find("input").attr("value", res.data.url);
+          li.find(".progress").hide();
+          li.find("input").removeClass("hide");
+          historyImages.unshift(res.data.url);
+          oneImageCopy();
+          window.localStorage.setItem("history", JSON.stringify(historyImages));
+        } else if (res.code === -101) {
           // 未登录
-          $(".not_logged").show()
-          $(".logged").hide()
-          return false;
+          $(".not_logged").show();
+          $(".logged").hide();
+        } else {
+          // 报错
+          alert(res.message);
         }
-        li.find("img").attr("data-clipboard-text", res.data.url);
-        li.find("img").attr("src", res.data.url);
-        li.find("input").attr("data-clipboard-text", res.data.url);
-        li.find("input").attr("value", res.data.url);
-        li.find(".progress").hide();
-        li.find("input").removeClass("hide");
-        historyImages.unshift(res.data.url);
-        window.localStorage.setItem("history", JSON.stringify(historyImages));
-       
       } else {
         progressTip.html(
           "error:状态码：" + this.status + " 错误消息：" + this.statusText
@@ -197,13 +185,13 @@ $(function () {
         name: "bili_jct",
       },
       function (res) {
-        if(res){
+        if (res) {
           csrf = res.value;
-          $(".not_logged").hide()
-          $(".logged").show()
-        }else {
-          // $(".not_logged").show()
-          // $(".logged").hide()
+          $(".not_logged").hide();
+          $(".logged").show();
+        } else {
+          $(".not_logged").show();
+          $(".logged").hide();
         }
       }
     );
@@ -214,6 +202,7 @@ $(function () {
       const url = historyImages[i];
       let str = `<li>
         <img
+          class="pic_img"
           data-clipboard-text="${url}"
           src="${url}"
         />
@@ -226,5 +215,23 @@ $(function () {
       </li>`;
       $(".pic_list").append(str);
     }
+    oneImageCopy();
+  }
+  // 单张图片复制链接
+  function oneImageCopy() {
+    let copy = new ClipboardJS(".pic_img,.pic_url");
+    copy.on("success", function (e) {
+      $(e.trigger).parent().find(".pic_url").select();
+      Toast.fire({
+        icon: "success",
+        title: "复制成功",
+      });
+    });
+    copy.on("error", function (e) {
+      Toast.fire({
+        icon: "success",
+        title: "复制失败",
+      });
+    });
   }
 });
