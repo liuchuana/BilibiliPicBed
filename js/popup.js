@@ -132,15 +132,16 @@ $(function () {
       progressTip.html("上传完成");
       if (this.status === 200) {
         let res = JSON.parse(this.response);
-        console.log(res);
+        let url = res.data.url.replace( /http/g, "https" );
+        let result = `https://images.weserv.nl/?url=${url}`
         if (res.code === 0) {
-          li.find("img").attr("data-clipboard-text", res.data.url);
-          li.find("img").attr("src", res.data.url);
-          li.find("input").attr("data-clipboard-text", res.data.url);
-          li.find("input").attr("value", res.data.url);
+          li.find("img").attr("data-clipboard-text", result);
+          li.find("img").attr("src", result);
+          li.find("input").attr("data-clipboard-text", result);
+          li.find("input").attr("value", result);
           li.find(".progress").hide();
           li.find("input").removeClass("hide");
-          historyImages.unshift(res.data.url);
+          historyImages.unshift(result);
           oneImageCopy();
           window.localStorage.setItem("history", JSON.stringify(historyImages));
         } else if (res.code === -101) {
