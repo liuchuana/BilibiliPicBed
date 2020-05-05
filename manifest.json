@@ -1,7 +1,7 @@
 {
   "name": "bilibili图床",
   "description": "简单好用的bilibili图床。",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "manifest_version": 2,
   "browser_action": {
     "default_icon": "images/icon.png"
