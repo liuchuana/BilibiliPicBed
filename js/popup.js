@@ -25,7 +25,7 @@ $(function () {
         images.push(imgBase64);
       }
     }
-    for (let i = 0; i < images.length; i++) {
+    for (let i = images.length - 1; i >= 0; i--) {
       let item = images[i];
       uploadFile(item);
     }
@@ -132,8 +132,8 @@ $(function () {
       progressTip.html("上传完成");
       if (this.status === 200) {
         let res = JSON.parse(this.response);
-        let url = res.data.url.replace( /http/g, "https" );
-        let result = `https://images.weserv.nl/?url=${url}`
+        let url = res.data.url.replace(/http/g, "https");
+        let result = `https://images.weserv.nl/?url=${url}`;
         if (res.code === 0) {
           li.find("img").attr("data-clipboard-text", result);
           li.find("img").attr("src", result);
@@ -141,7 +141,7 @@ $(function () {
           li.find("input").attr("value", result);
           li.find(".progress").hide();
           li.find("input").removeClass("hide");
-          historyImages.unshift(result);
+          historyImages.unshift(url);
           oneImageCopy();
           window.localStorage.setItem("history", JSON.stringify(historyImages));
         } else if (res.code === -101) {
@@ -200,7 +200,7 @@ $(function () {
   //  渲染历史数据
   function drawHistoryImages() {
     for (let i = 0; i < historyImages.length; i++) {
-      const url = historyImages[i];
+      const url = `https://images.weserv.nl/?url=${historyImages[i]}`;
       let str = `<li>
         <img
           class="pic_img"
